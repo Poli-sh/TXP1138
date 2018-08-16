@@ -1,0 +1,78 @@
+<resources>
+    <string name="app_name">YOBOBO</string>
+    <string name="myAlphaNumeric">абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЭЮЯ</string>
+    <string-array name="screen_array">
+        <item>Личные данные</item>
+        <item>Счет</item>
+        <item>Условия тарификации</item>
+    </string-array>
+    <string name="title_activity_two">Регистрация YOBOBO</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">YOBOBO</string>
+    <string name="nav_header_subtitle">prilogulka@example.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Состояние счета:</string>
+    <string name="title_activity_login">YOBOBO</string>
+
+    <!--<string name="title_fragment_first">Личные данные в YOBOBO</string>-->
+    <!--<string name="title_fragment_second">Ваш счет в YOBOBO</string>-->
+    <!--<string name="title_fragment_third">Рекламные ролики с YOBOBO</string>-->
+    <!--<string name="title_fragment_fourth">Подарочные карты от YOBOBO</string>-->
+    <!--<string name="title_fragment_fifth">Как работает YOBOBO</string>-->
+    <!--<string name="title_fragment_six">Обратиться к YOBOBO</string>-->
+
+
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Пароль</string>
+    <string name="action_sign_in">Вход</string>
+    <string name="action_sign_in_short">Проверка пароля</string>
+    <string name="error_invalid_email">Введен некорректный email</string>
+    <string name="error_invalid_password">Пароль слишком короткий</string>
+    <string name="error_incorrect_password">Неверный пароль</string>
+    <string name="error_field_required">Обязательное поле</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+
+    <string name="confirm_registry">Email не найден.Вы хотите зарегистрироваться с этим email и паролем?</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
+    <string name="updatingReport">Обновление Базы данных</string>
+    <string name="personal">Личные данные</string>
+    <string name="money">Мой счет/Вывод средств</string>
+    <string name="video">Рекламные ролики</string>
+    <string name="gift_card">Подарочные карты</string>
+    <string name="about_us">О нас</string>
+    <string name="how_it_work">Как это работает</string>
+    <string name="call_us">Обратиться к нам</string>
+    <string name="registration">Регистрация</string>
+    <string name="welcome_to_yobobo">Добро пожаловать в YOBOBO.</string>
+    <string name="please_repeat">Пожалуйста поторите email и пароль.</string>
+    <string name="save">Сохранить</string>
+    <string name="Name">Имя</string>
+    <string name="Surname">Фамилия</string>
+    <string name="day">день</string>
+    <string name="month">месяц</string>
+    <string name="year">год</string>
+    <string name="birthday">Дата рождения:</string>
+    <string name="city">Город</string>
+    <string name="sex">пол</string>
+    <string name="next">Далее</string>
+    <string name="play">Play</string>
+    <string name="stop">Stop</string>
+    <string name="next_play">NEXT</string>
+    <string name="shown_video">Просмотренные видео:</string>
+    <string name="refresh_money">Обновить счет</string>
+    <string name="tarif">Описание тарифа</string>
+    <string name="how_much_money">У вас на счету:</string>
+    <string name="turn_back">Назад к просмотру</string>
+    <string-array name="пол">
+        <item>пол</item>
+        <item>жен</item>
+        <item>муж</item>
+</string-array>
+
+</resources>
