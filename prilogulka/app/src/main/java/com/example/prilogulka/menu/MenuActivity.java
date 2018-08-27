@@ -35,6 +35,10 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
     private Uri uriList[];
     int money = 0;
 
+    /**
+     *
+     * TODO: см. письмо.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
