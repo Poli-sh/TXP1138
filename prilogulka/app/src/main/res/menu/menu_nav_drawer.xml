@@ -18,21 +18,24 @@
             android:icon="@drawable/ic_menu_slideshow"
             android:title="@string/video" />
         <item
-            android:id="@+id/nav_manage"
+            android:id="@+id/nav_gifts"
             android:icon="@drawable/ic_card_giftcard_black_24dp"
             android:title="@string/gift_card" />
     </group>
 
     <item android:title="@string/about_us">
         <menu>
-            <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_manage"
-                android:title="@string/how_it_work" />
-            <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="@string/call_us" />
+            <group android:checkableBehavior="single">
+
+                <item
+                    android:id="@+id/nav_help"
+                    android:icon="@drawable/ic_menu_manage"
+                    android:title="@string/how_it_work" />
+                <item
+                    android:id="@+id/nav_connect_us"
+                    android:icon="@drawable/ic_menu_send"
+                    android:title="@string/call_us" />
+            </group>
         </menu>
     </item>
 

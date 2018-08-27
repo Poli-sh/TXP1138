@@ -1,4 +1,4 @@
-package com.example.prilogulka;
+package com.example.prilogulka.user_data;
 
 
 public class User {
