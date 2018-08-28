@@ -75,7 +75,7 @@ public class UserInfoActivity extends AppCompatActivity {
         } else {
             saveInfoInSharedPreferences();
 
-            Toast.makeText(this, "Добро пожаловать " +
+            Toast.makeText(this, "Добро пожаловать, " +
                     spManager.getStringFromSharedPreferences("имя"), Toast.LENGTH_SHORT).show();
 
             Intent intent = new Intent(this, MenuActivity.class);

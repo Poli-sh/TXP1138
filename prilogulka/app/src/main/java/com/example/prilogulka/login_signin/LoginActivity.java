@@ -144,7 +144,7 @@ public class LoginActivity extends AppCompatActivity {//} implements LoaderCallb
 
     }
     private void welcomeExistingUser() {
-        Toast.makeText(this, "Добро пожаловать" +
+        Toast.makeText(this, "Добро пожаловать, " +
                 spManager.getStringFromSharedPreferences("имя"), Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, MenuActivity.class);
         startActivity(intent);

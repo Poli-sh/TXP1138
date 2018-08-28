@@ -27,7 +27,7 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/start1"
+                android:id="@+id/button_play"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -35,14 +35,14 @@
 
 
             <Button
-                android:id="@+id/stop1"
+                android:id="@+id/button_stop"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/stop" />
 
             <Button
-                android:id="@+id/next"
+                android:id="@+id/button_next"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -57,7 +57,7 @@
             android:textColor="@android:color/black" />
 
         <TextView
-            android:id="@+id/textViewVideoCounter1"
+            android:id="@+id/textViewVideoCounter"
             android:layout_width="match_parent"
             android:layout_height="25dp"
             android:textColor="@android:color/black" />
