@@ -13,6 +13,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.prilogulka.SharedPreferencesManager;
 import com.example.prilogulka.menu.MenuActivity;
 import com.example.prilogulka.R;
 
@@ -20,9 +21,7 @@ public class UserInfoActivity extends AppCompatActivity {
 
     String[] sex = {"жен", "муж"};
 
-    public static String SHARED_PREFERENCES_NAME = "userInfo";
-    SharedPreferences sharedPreferences;
-    SharedPreferences.Editor editor;
+    SharedPreferencesManager spManager;
 
     Spinner spinner;
     EditText editName, editSurname, editCity, editDay, editMonth, editYear;
@@ -33,12 +32,12 @@ public class UserInfoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user_info);
 
         initializeSpinner();
-        initUserInfoStorer();
+        initSharedPreferenceManager();
     }
 
-    private void initUserInfoStorer(){
-        sharedPreferences = getSharedPreferences(SHARED_PREFERENCES_NAME, MODE_PRIVATE);
-        editor = sharedPreferences.edit();
+    private void initSharedPreferenceManager(){
+        spManager = new SharedPreferencesManager();
+        spManager.initUserInfoStorer(this);
     }
 
     private void initializeSpinner(){
@@ -76,6 +75,9 @@ public class UserInfoActivity extends AppCompatActivity {
         } else {
             saveInfoInSharedPreferences();
 
+            Toast.makeText(this, "Добро пожаловать " +
+                    spManager.getStringFromSharedPreferences("имя"), Toast.LENGTH_SHORT).show();
+
             Intent intent = new Intent(this, MenuActivity.class);
             startActivity(intent);
         }
@@ -93,13 +95,13 @@ public class UserInfoActivity extends AppCompatActivity {
     private void saveInfoInSharedPreferences(){
         Toast.makeText(this, "Сохранение", Toast.LENGTH_SHORT).show();
 
-        putStringInSharedPreferences("имя", editName.getText().toString());
-        putStringInSharedPreferences("фамилия", editSurname.getText().toString());
-        putStringInSharedPreferences("город", editCity.getText().toString());
-        putStringInSharedPreferences("день рождения", editDay.getText().toString());
-        putStringInSharedPreferences("месяц рождения", editMonth.getText().toString());
-        putStringInSharedPreferences("год рождения", editYear.getText().toString());
-        putStringInSharedPreferences("пол", spinner.getSelectedItemPosition() + "");
+        spManager.putStringInSharedPreferences("имя", editName.getText().toString());
+        spManager.putStringInSharedPreferences("фамилия", editSurname.getText().toString());
+        spManager.putStringInSharedPreferences("город", editCity.getText().toString());
+        spManager.putStringInSharedPreferences("день рождения", editDay.getText().toString());
+        spManager.putStringInSharedPreferences("месяц рождения", editMonth.getText().toString());
+        spManager.putStringInSharedPreferences("год рождения", editYear.getText().toString());
+        spManager.putStringInSharedPreferences("пол", spinner.getSelectedItemPosition() + "");
 
     }
     private boolean hasEmptyField(){
@@ -123,15 +125,6 @@ public class UserInfoActivity extends AppCompatActivity {
 
     private boolean isEmpty(EditText editText) {
         return editText.getText().toString().equals("");
-    }
-
-    public void putStringInSharedPreferences(String key, String stringToPut) {
-        editor.putString(key, stringToPut);
-        editor.commit();
-    }
-
-    public String getStringFromSharedPreferences(String keyInSharedPreferences) {
-        return sharedPreferences.getString(keyInSharedPreferences, "");
     }
 
 }

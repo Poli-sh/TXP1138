@@ -52,7 +52,8 @@
     <string name="call_us">Обратиться к нам</string>
     <string name="registration">Регистрация</string>
     <string name="welcome_to_yobobo">Добро пожаловать в YOBOBO.</string>
-    <string name="please_repeat">Пожалуйста поторите email и пароль.</string>
+    <string name="please_check_email_password">Пожалуйста проверьте email и пароль. Если данные введены неверно
+    Вы можете их изменить.</string>
     <string name="save">Сохранить</string>
     <string name="Name">Имя</string>
     <string name="Surname">Фамилия</string>
