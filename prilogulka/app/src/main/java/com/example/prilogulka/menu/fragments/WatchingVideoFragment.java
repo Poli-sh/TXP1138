@@ -45,25 +45,6 @@ public class WatchingVideoFragment extends Fragment implements View.OnClickListe
         initUIReference(rootView);
         textViewVideoCounter.setText(money + "");
         videoView.setVideoURI(Uri.parse("android.resource://" + getContext().getPackageName() + "/" + R.raw.gu));
-//        btnStart.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                videoView.start();
-//                videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-//                    @Override
-//                    public void onCompletion(MediaPlayer mediaPlayer) {
-//                        money++;
-//                        textViewVideoCounter.setText(money + "");
-//                    }
-//                });
-//            }
-//        });
-//        btnStop.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                videoView.stopPlayback();
-//            }
-//        });
 
         Uri myUri1 = Uri.parse("android.resource://" + getActivity().getPackageName() + "/" + R.raw.gu);
         Uri myUri2 = Uri.parse("android.resource://" + getActivity().getPackageName() + "/" + R.raw.video1);
@@ -73,22 +54,6 @@ public class WatchingVideoFragment extends Fragment implements View.OnClickListe
 
         uriList = new Uri[]{myUri1, myUri2, myUri3, myUri4};
 
-//        btnNext = rootView.findViewById(R.id.button_next);
-//        btnNext.setEnabled(true);
-//        btnNext.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                for (int i = 0; i < uriList.length; i++) {
-//                    videoView.setVideoURI(uriList[i]);
-//                    videoView.start();
-//                    /**
-//                     * TODO: сделать нормальное переключение видео
-//                     */
-//                    if (i == uriList.length)
-//                        i = 0;
-//                }
-//            }
-//        });
         return rootView;
     }
 
