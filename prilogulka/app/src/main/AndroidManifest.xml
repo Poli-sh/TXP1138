@@ -26,7 +26,7 @@
         <activity
             android:name=".menu.MenuActivity"
             android:label="@string/app_name"
-            android:theme="@style/myWindowStyle"/>
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".login_signin.UserInfoActivity"
             android:label="@string/title_activity_two"
