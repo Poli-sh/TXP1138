@@ -15,14 +15,6 @@
     <string name="action_settings">Состояние счета:</string>
     <string name="title_activity_login">YOBOBO</string>
 
-    <!--<string name="title_fragment_first">Личные данные в YOBOBO</string>-->
-    <!--<string name="title_fragment_second">Ваш счет в YOBOBO</string>-->
-    <!--<string name="title_fragment_third">Рекламные ролики с YOBOBO</string>-->
-    <!--<string name="title_fragment_fourth">Подарочные карты от YOBOBO</string>-->
-    <!--<string name="title_fragment_fifth">Как работает YOBOBO</string>-->
-    <!--<string name="title_fragment_six">Обратиться к YOBOBO</string>-->
-
-
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Пароль</string>
@@ -52,8 +44,7 @@
     <string name="call_us">Обратиться к нам</string>
     <string name="registration">Регистрация</string>
     <string name="welcome_to_yobobo">Добро пожаловать в YOBOBO.</string>
-    <string name="please_check_email_password">Пожалуйста проверьте email и пароль. Если данные введены неверно
-    Вы можете их изменить.</string>
+    <string name="please_enter_email_password">Пожалуйста, введите email и пароль.</string>
     <string name="save">Сохранить</string>
     <string name="Name">Имя</string>
     <string name="Surname">Фамилия</string>
@@ -76,8 +67,4 @@
         <item>жен</item>
         <item>муж</item>
     </string-array>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
 </resources>

@@ -1,6 +1,7 @@
 package com.example.prilogulka.menu;
 
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.support.design.widget.AppBarLayout;
@@ -19,9 +20,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.VideoView;
 
 import com.example.prilogulka.R;
+import com.example.prilogulka.SharedPreferencesManager;
+import com.example.prilogulka.login_signin.LoginActivity;
 import com.example.prilogulka.menu.fragments.ConnectUsFragment;
 import com.example.prilogulka.menu.fragments.GiftsManagerFragment;
 import com.example.prilogulka.menu.fragments.HelpWithAppFragment;
@@ -34,17 +38,15 @@ import com.example.prilogulka.menu.fragments.WatchingVideoFragment;
 
 public class MenuActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    private Uri uriList[];
-    int money = 0;
+    SharedPreferencesManager spManager;
 
-    /**
-     *
-     * TODO: см. письмо.
-     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+
+        spManager = new SharedPreferencesManager();
+        spManager.initUserInfoStorer(this);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -55,157 +57,22 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            toolbar.setElevation(0.1f);
-        }
-
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        View headerView = navigationView.getHeaderView(0);
+
+        TextView userNameHeader = headerView.findViewById(R.id.nav_header_user_name);
+        userNameHeader.setText(spManager.getStringFromSharedPreferences("фамилия") + " "
+        + spManager.getStringFromSharedPreferences("имя"));
+
+        TextView userEmailHeader = headerView.findViewById(R.id.nav_header_user_email);
+        userEmailHeader.setText(spManager.getStringFromSharedPreferences("email"));
 
         FragmentTransaction tx = getSupportFragmentManager().beginTransaction();
         tx.replace(R.id.flContent, new WatchingVideoFragment());
         tx.commit();
-
-/**
- * TODO: нужно сделать функцию выбора отображаемых экранов.
- */
-
-       // DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        //drawer.closeDrawer(GravityCompat.START);
-//        final VideoView videoView = findViewById(R.id.videoPlayerMain);
-//        videoView.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.gu));
-//
-//        setUriList();
-//
-//        final TextView tvVideoCounter = findViewById(R.id.textViewVideoCounter);//фиксирует просмотры видео, на базе которых идет начисление средств на счет пользователя
-//        int money1 = getIntent().getIntExtra("money1",money);//переменная получает данные со счета если начисления уже были или передает значение переменной money=0
-//        tvVideoCounter.setText(money1 + "");
-//
-//        Button btnStart = findViewById(R.id.start);
-//        btnStart.setEnabled(true);
-//        btnStart.setOnClickListener(new View.OnClickListener() {
-//            short j = 0; // changing video in order
-//
-//            @Override
-//            public void onClick(View view) {
-//                Random random = new Random();
-//                final int uriListIndex = random.nextInt(uriList.length);
-//                for (int i = 0; i <= uriList.length; i++) {
-//                    videoView.setVideoURI(uriList[uriListIndex]);
-//                    videoView.start();
-//                    videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-//
-//                        @Override
-//                        public void onCompletion(MediaPlayer mediaPlayer) {
-//                            Toast.makeText(getApplicationContext(), "Воспроизведение видео закончено",
-//                                    Toast.LENGTH_LONG).show();
-//                            int money1 = getIntent().getIntExtra("money1",money);
-//                            if (money == money1) {
-//                                money++;
-//                                tvVideoCounter.setText(money + "");
-//                            } else {
-//                                money1++;
-//                                tvVideoCounter.setText(money1 + "");
-//                            }
-//                        }
-//                    });
-//                }
-//                switch (j) {
-//                    case 0:
-//                        j++;
-//                        break;
-//                    case 1:
-//                        j--;
-//                        break;
-//                }
-//                videoView.stopPlayback();
-//                videoView.setVideoURI(uriList[j]);
-//                videoView.start();
-//            }
-//        });
-//
-//        Button btnStop = findViewById(R.id.stop);
-//        btnStop.setEnabled(true);
-//        btnStop.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                videoView.stopPlayback();
-//            }
-//        });
-//        Button btnNext = findViewById(R.id.nextV);
-//        btnNext.setEnabled(true);
-//
-//
-//        btnNext.setOnClickListener(new View.OnClickListener() {
-//            int i = 0; // changing video in order
-//            int a = 2;
-//
-//            public void onClick(View view) {
-//                Random random = new Random();
-//                final int uriListIndex = random.nextInt(uriList.length);
-//                for (int i = 0; i <= uriList.length; i++) {
-//                    videoView.setVideoURI(uriList[uriListIndex]);
-//                    videoView.start();
-//                    videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-//
-//                        @Override
-//                        public void onCompletion(MediaPlayer mediaPlayer) {
-//                            Toast.makeText(getApplicationContext(), "Воспроизведение видео закончено",
-//                                    Toast.LENGTH_LONG).show();
-//                            int money1 = getIntent().getIntExtra("money1",money);
-//                            if (money == money1) {
-//                                money++;
-//                                tvVideoCounter.setText(money + "");
-//                            } else {
-//                                money1++;
-//                                tvVideoCounter.setText(money1 + "");
-//                            }
-//                        }
-//                });
-//                }
-//                switch (i) {
-//                    case 0:
-//                        i++;
-//                        break;
-//                    case 1:
-//                        i--;
-//                        i=i+a;
-//                        break;
-//
-//                }
-//                videoView.stopPlayback();
-//                videoView.setVideoURI(uriList[i]);
-//                videoView.start();
-//            }
-//        });
-//
-//        Button btnMoney = findViewById(R.id.moneyCase);//для обновления счета после всех просмотров. Кнопка передает данные во фрагмент "мой счет"
-//        btnMoney.setOnClickListener(new View.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View view) {
-//                FragmentManager fm = getSupportFragmentManager();
-//                android.support.v4.app.Fragment fragment1 = fm.findFragmentById(R.id.container);
-//                if (fragment1 == null) {
-//                    fragment1 = new NavigationMoneyFragment();
-//                    Bundle bundle = new Bundle();
-//                    bundle.putInt("money", money);
-//                    fragment1.setArguments(bundle);
-//                    fm.beginTransaction().add(R.id.container, fragment1).commit();
-//                }
-//            }
-//        });
-
-
     }
-
-//    public void setUriList() {
-//        Uri myUri1 = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.gu);
-//        Uri myUri2 = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.video1);
-//        Uri myUri3 = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.video2);
-//        Uri myUri4 = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.video3);
-//        uriList = new Uri[]{myUri1, myUri2, myUri3, myUri4};
-//    }
 
     @Override
     public void onBackPressed() {
@@ -220,7 +87,6 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
             drawer.closeDrawer(GravityCompat.START);
         else
             super.onBackPressed();
-
     }
 
     @Override
@@ -249,16 +115,9 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        //VideoView videoView = findViewById(R.id.videoPlayerMain);
-        //videoView.stopPlayback(); //в случае открытия меню видео останавливается
-
         Fragment fragment = null;
-        //Class fragmentClass = null;
 
-
-        int id = item.getItemId();
-
-        switch (id){
+        switch (item.getItemId()){
             case R.id.nav_person:
                 fragment = new PersonalDataFragment();
                 break;
@@ -280,45 +139,7 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
             default:
                 fragment = new WatchingVideoFragment();
                 break;
-/**
- * TODO: надо изменить названия фрагментов, а то студия почему-то не дает пока что это сделать.
- */
         }
-
-//        if (id == R.id.nav_person) {
-//
-//            fragmentClass = PersonalDataFragment.class;
-//
-//        } else if (id == R.id.nav_money) {
-//            fragmentClass = NavigationMoneyFragment.class;
-//           if (fragment!=null){
-//               fragment = new NavigationMoneyFragment();
-//               Bundle bundle = new Bundle();
-//               bundle.putInt("money", money);
-//               fragment.setArguments(bundle);
-//               fm.beginTransaction().add(R.id.container, fragment).commit();
-//           }
-//
-//
-//    } else if (id == R.id.nav_video) {
-//            videoView.setVisibility(View.GONE);
-//            fragmentClass = WatchingVideoFragment.class;
-//
-//        } else if (id == R.id.nav_manage) {
-//            fragmentClass = GiftsManagerFragment.class;
-//
-//        } else if (id == R.id.nav_share) {
-//            fragmentClass = FifthFragment.class;
-//
-//        } else if (id == R.id.nav_send) {
-//            fragmentClass = SixthFragment.class;
-//
-//        }
-//        try {
-//            fragment = (android.support.v4.app.Fragment) fragmentClass.newInstance();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();

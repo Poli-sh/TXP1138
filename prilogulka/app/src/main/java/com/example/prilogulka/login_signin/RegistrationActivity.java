@@ -24,27 +24,6 @@ import com.example.prilogulka.R;
 
 public class RegistrationActivity extends AppCompatActivity {
 
-// данный класс во многом дублирует Login Activity.
-
-// Переход сюда осуществляется по кнопке регистрация в Login Activity.
-// В случае если пользователь ввел ранее не зарегистрированный email
-// идет переход к Two Activity где пользоатель заполнит анкету.
-
-    //необходимо добавить в эту цепочку рассылку писем с проверкой email
-
-    // Id to identity READ_CONTACTS permission request.
-    // private static final int REQUEST_READ_CONTACTS = 0;
-
-
-     // A dummy authentication store containing known user names and passwords.
-     // TODO: remove after connecting to a real authentication system.
-    //private static final String[] DUMMY_CREDENTIALS = new String[]{
-            //"foo@example.com:hello", "bar@example.com:world"
-    //};
-
-    // Keep track of the login task to ensure we can cancel it if requested.
-    //private RegistrationActivity.UserLoginTask mAuthTask = null;
-
     // UI references.
     private EditText mEmailView;
     private EditText mPasswordView;
@@ -52,9 +31,7 @@ public class RegistrationActivity extends AppCompatActivity {
     private TextInputLayout passwordInputLayout;
     private Button buttonSave;
 
-//    public final String SHARED_PREFERENCES_NAME = "userInfo";
-//    SharedPreferences sharedPreferences;
-//    SharedPreferences.Editor editor;
+    // storing value
     SharedPreferencesManager spManager;
 
     @Override
@@ -63,9 +40,6 @@ public class RegistrationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_registration);
 
         initUIReference();
-
-        mEmailView.setText(this.getIntent().getStringExtra("email"));
-        mPasswordView.setText(this.getIntent().getStringExtra("password"));
 
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             // зачем действие по прослушке изменений
@@ -111,10 +85,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
         buttonSave = findViewById(R.id.save);
     }
-//    private void initUserInfoStorer(){
-//        sharedPreferences = getSharedPreferences(SHARED_PREFERENCES_NAME, MODE_PRIVATE);
-//        editor = sharedPreferences.edit();
-//    }
+
     private void saveInfoInSharedPreferences(){
         Toast.makeText(this, "Сохранение", Toast.LENGTH_SHORT).show();
 
@@ -129,28 +100,15 @@ public class RegistrationActivity extends AppCompatActivity {
         spManager.putStringInSharedPreferences("год рождения", "");
         spManager.putStringInSharedPreferences("пол", "");
     }
-//    public void putStringInSharedPreferences(String key, String stringToPut) {
-//        editor.putString(key, stringToPut);
-//        editor.commit();
-//    }
 
-//    public String getStringFromSharedPreferences(String keyInSharedPreferences) {
-//        return sharedPreferences.getString(keyInSharedPreferences, "");
-//    }
-
-    // проверка всех элементов экрана преед отправкой формы и входа юзверя
     private void attemptLogin() {
 
         resetPasswordAndEmailErrors();
 
         if ( isEmailValid() && isPasswordValid() ) {
-            if (isLoginExistsInSharedPreferences()){
+            if (isEmailExistsInSharedPreferences()){
                 checkExistingUserPassword();
             } else {
-
-                Log.i("REGISTRATION_ACTIVITY", "EMAIL " + mEmailView.getText().toString());
-                Log.i("REGISTRATION_ACTIVITY", "PASSWORD " + mPasswordView.getText().toString());
-
                 saveInfoInSharedPreferences();
                 welcomeNewUser();
             }
@@ -176,7 +134,7 @@ public class RegistrationActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MenuActivity.class);
         startActivity(intent);
     }
-    private boolean isLoginExistsInSharedPreferences() {
+    private boolean isEmailExistsInSharedPreferences() {
         Log.i("REGISTRATION_ACTIVITY", spManager.getStringFromSharedPreferences("email"));
         return !spManager.getStringFromSharedPreferences("email").equals("")
                 && spManager.getStringFromSharedPreferences("email").equals(mEmailView.getText().toString());
