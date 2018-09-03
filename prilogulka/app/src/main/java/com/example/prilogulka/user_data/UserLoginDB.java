@@ -1,4 +1,4 @@
-package com.example.prilogulka;
+package com.example.prilogulka.user_data;
 
 
 import android.content.ContentValues;
@@ -7,11 +7,13 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.prilogulka.user_data.User;
 
-    public class DataBase extends SQLiteOpenHelper {
+
+public class UserLoginDB extends SQLiteOpenHelper {
     private final static int DB_VERSION = 10;
 
-    public DataBase(Context context) {
+    public UserLoginDB(Context context) {
         super(context, "myApp.db", null, DB_VERSION);
     }
 

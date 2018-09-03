@@ -3,13 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:gravity="center_horizontal"
     android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".RegistrationActivity">
+    tools:context=".login_signin.RegistrationActivity">
 
     <!-- Login progress -->
     <TextView
@@ -18,6 +19,8 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
         android:text="@string/welcome_to_yobobo"
+        android:textStyle="bold"
+        android:textAlignment="center"
         android:textSize="18sp" />
 
     <TextView
@@ -25,7 +28,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:text="@string/please_repeat"
+        android:text="@string/please_check_email_password"
         android:textSize="18sp" />
 
     <ProgressBar
@@ -49,10 +52,11 @@
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:id="@+id/email_text_input_layout">
 
-                <AutoCompleteTextView
-                    android:id="@+id/email1"
+                <EditText
+                    android:id="@+id/email_registration"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/prompt_email"
@@ -64,10 +68,14 @@
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:id="@+id/password_text_input_layout"
+                app:passwordToggleEnabled="true"
+                app:counterEnabled="true"
+                >
 
                 <EditText
-                    android:id="@+id/password1"
+                    android:id="@+id/password_registration"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/prompt_password"
