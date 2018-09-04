@@ -1,18 +1,12 @@
 package com.example.prilogulka.login_signin;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.support.design.widget.TextInputLayout;
 import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Toast;
 
-import com.example.prilogulka.SharedPreferencesManager;
 import com.example.prilogulka.data.User;
-import com.example.prilogulka.data_base.LoginDataBase;
-import com.example.prilogulka.data_base.UserLoginDB;
+import com.example.prilogulka.data_base.UserInfoDataBaseImpl;
 import com.example.prilogulka.menu.MenuActivity;
 import com.example.prilogulka.R;
 
@@ -51,7 +45,7 @@ public class LoginActivity extends AppCompatActivity {
     private TextInputLayout passwordInputLayout;
 
     // storing value
-    LoginDataBase loginDB;
+    UserInfoDataBaseImpl userInfoDataBase;
     User user;
 
     @Override
@@ -93,7 +87,7 @@ public class LoginActivity extends AppCompatActivity {
         mPasswordView = findViewById(R.id.password);
         passwordInputLayout = findViewById(R.id.password_text_input_layout);
 
-        loginDB = new UserLoginDB(this);
+        userInfoDataBase = new UserInfoDataBaseImpl(this);
     }
     private void hideKeyboard(){
         InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -105,7 +99,7 @@ public class LoginActivity extends AppCompatActivity {
 
         if ( isEmailValid() && isPasswordValid() ) {
 
-            if (isLoginExistsInDB())
+            if (isLoginExistsInDataBase())
                 checkExistingUserPassword();
             else
                 showHint("Вы не зарегистрированы. Нажмите кнопку \"Регистрация\".");
@@ -133,8 +127,8 @@ public class LoginActivity extends AppCompatActivity {
 //
         startActivity(intent);
     }
-    private boolean isLoginExistsInDB() {
-        List<User> userList = loginDB.findUser("email", mEmailView.getText().toString());
+    private boolean isLoginExistsInDataBase() {
+        List<User> userList = userInfoDataBase.findUserInfo("email", mEmailView.getText().toString());
         if (userList.size() == 1) {
             user = userList.get(0);
             Log.i("REGISTRATION_ACTIVITY", user.getEmail());

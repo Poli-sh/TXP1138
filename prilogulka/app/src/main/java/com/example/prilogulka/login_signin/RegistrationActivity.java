@@ -19,8 +19,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.prilogulka.SharedPreferencesManager;
+import com.example.prilogulka.data.User;
+import com.example.prilogulka.data_base.UserInfoDataBase;
+import com.example.prilogulka.data_base.UserInfoDataBaseImpl;
 import com.example.prilogulka.menu.MenuActivity;
 import com.example.prilogulka.R;
+
+import java.util.List;
 
 public class RegistrationActivity extends AppCompatActivity {
 
@@ -32,7 +37,9 @@ public class RegistrationActivity extends AppCompatActivity {
     private Button buttonSave;
 
     // storing value
-    SharedPreferencesManager spManager;
+    //SharedPreferencesManager spManager;
+    UserInfoDataBaseImpl userInfoDataBase;
+    User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,24 +64,20 @@ public class RegistrationActivity extends AppCompatActivity {
         buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(buttonSave.getWindowToken(), 0);
+                hideKeyboard();
 
                 attemptLogin();
             }
         });
 
-        initSharedPreferenceManager();
+
     }
 
     public void hideKeyboard(){
         InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(mPasswordView.getWindowToken(), 0);
     }
-    private void initSharedPreferenceManager(){
-        spManager = new SharedPreferencesManager();
-        spManager.initUserInfoStorer(this);
-    }
+
     public void initUIReference(){
         mEmailView = findViewById(R.id.email_registration);
         emailInputLayout = findViewById(R.id.email_text_input_layout);
@@ -84,21 +87,18 @@ public class RegistrationActivity extends AppCompatActivity {
         passwordInputLayout = findViewById(R.id.password_text_input_layout);
 
         buttonSave = findViewById(R.id.save);
+
+        userInfoDataBase = new UserInfoDataBaseImpl(this);
     }
 
-    private void saveInfoInSharedPreferences(){
+    private void saveInfoToDataBase(){
         Toast.makeText(this, "Сохранение", Toast.LENGTH_SHORT).show();
 
-        spManager.putStringInSharedPreferences("email", mEmailView.getText().toString());
-        spManager.putStringInSharedPreferences("password", mPasswordView.getText().toString());
+        User user = new User();
+        user.setEmail(mEmailView.getText().toString());
+        user.setPassword(mPasswordView.getText().toString());
 
-        spManager.putStringInSharedPreferences("имя", "");
-        spManager.putStringInSharedPreferences("фамилия", "");
-        spManager.putStringInSharedPreferences("город", "");
-        spManager.putStringInSharedPreferences("день рождения", "");
-        spManager.putStringInSharedPreferences("месяц рождения", "");
-        spManager.putStringInSharedPreferences("год рождения", "");
-        spManager.putStringInSharedPreferences("пол", "");
+        userInfoDataBase.insertUserInfo(user);
     }
 
     private void attemptLogin() {
@@ -106,10 +106,10 @@ public class RegistrationActivity extends AppCompatActivity {
         resetPasswordAndEmailErrors();
 
         if ( isEmailValid() && isPasswordValid() ) {
-            if (isEmailExistsInSharedPreferences()){
+            if (isEmailExistsInDataBase()){
                 checkExistingUserPassword();
             } else {
-                saveInfoInSharedPreferences();
+                saveInfoToDataBase();
                 welcomeNewUser();
             }
         }
@@ -126,22 +126,28 @@ public class RegistrationActivity extends AppCompatActivity {
     }
     private void welcomeNewUser(){
         Intent intent = new Intent(this, UserInfoActivity.class);
+        intent.putExtra("email", mEmailView.getText().toString());
         startActivity(intent);
     }
     private void welcomeExistingUser() {
-        Toast.makeText(this, "Добро пожаловать, " +
-                spManager.getStringFromSharedPreferences("имя"), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "Добро пожаловать, " +
+//                spManager.getStringFromSharedPreferences("имя"), Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, MenuActivity.class);
         startActivity(intent);
     }
-    private boolean isEmailExistsInSharedPreferences() {
-        Log.i("REGISTRATION_ACTIVITY", spManager.getStringFromSharedPreferences("email"));
-        return !spManager.getStringFromSharedPreferences("email").equals("")
-                && spManager.getStringFromSharedPreferences("email").equals(mEmailView.getText().toString());
+    private boolean isEmailExistsInDataBase() {
+        //Log.i("REGISTRATION_ACTIVITY", spManager.getStringFromSharedPreferences("email"));
+        List<User> userList = userInfoDataBase.findUserInfo("email", mEmailView.getText().toString());
+        if (userList.size() == 1) {
+            user = userList.get(0);
+            Log.i("REGISTRATION_ACTIVITY", user.getEmail());
+            return true;
+        }
+        return false;
     }
 
     private boolean equalsPasswordExistingUserAndInputPassword() {
-        return spManager.getStringFromSharedPreferences("password").equals(mPasswordView.getText().toString());
+        return user.getPassword().equals(mPasswordView.getText().toString());
     }
 
     private boolean isEmailValid(){

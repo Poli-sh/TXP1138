@@ -145,8 +145,6 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.list_of_user_actions:
                 break;
-            case R.id.list_of_user_info:
-                break;
 
             default:
                 fragment = new WatchingVideoFragment();
