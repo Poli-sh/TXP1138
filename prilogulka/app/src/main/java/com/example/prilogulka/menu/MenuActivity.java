@@ -23,6 +23,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.VideoView;
 
+import com.example.prilogulka.ListOfUsersFragment;
 import com.example.prilogulka.R;
 import com.example.prilogulka.SharedPreferencesManager;
 import com.example.prilogulka.login_signin.LoginActivity;
@@ -136,6 +137,17 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_connect_us:
                 fragment = new ConnectUsFragment();
                 break;
+            /**
+             * TODO: протестировать и убрать.
+             */
+            case R.id.list_of_users:
+                fragment = new ListOfUsersFragment();
+                break;
+            case R.id.list_of_user_actions:
+                break;
+            case R.id.list_of_user_info:
+                break;
+
             default:
                 fragment = new WatchingVideoFragment();
                 break;

@@ -38,5 +38,20 @@
             </group>
         </menu>
     </item>
+    <item android:title="Базеночка">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/list_of_users"
+                    android:title="пользователи" />
+                <item
+                    android:id="@+id/list_of_user_actions"
+                    android:title="действия пользователей" />
+                <item
+                    android:id="@+id/list_of_user_info"
+                    android:title="инфо о юзере" />
+            </group>
+        </menu>
+    </item>
 
 </menu>

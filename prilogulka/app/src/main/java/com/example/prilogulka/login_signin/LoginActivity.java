@@ -10,6 +10,9 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.example.prilogulka.SharedPreferencesManager;
+import com.example.prilogulka.data.User;
+import com.example.prilogulka.data_base.LoginDataBase;
+import com.example.prilogulka.data_base.UserLoginDB;
 import com.example.prilogulka.menu.MenuActivity;
 import com.example.prilogulka.R;
 
@@ -25,6 +28,8 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import java.util.List;
 
 /**
  * A login screen that offers login via email/password.
@@ -46,7 +51,8 @@ public class LoginActivity extends AppCompatActivity {
     private TextInputLayout passwordInputLayout;
 
     // storing value
-    SharedPreferencesManager spManager;
+    LoginDataBase loginDB;
+    User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +84,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        initSharedPreferenceManager();
     }
 
     private void initUIReference(){
@@ -87,21 +92,20 @@ public class LoginActivity extends AppCompatActivity {
         mEmailSignInButton = findViewById(R.id.email_sign_in_button);
         mPasswordView = findViewById(R.id.password);
         passwordInputLayout = findViewById(R.id.password_text_input_layout);
+
+        loginDB = new UserLoginDB(this);
     }
     private void hideKeyboard(){
         InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(mPasswordView.getWindowToken(), 0);
     }
-    private void initSharedPreferenceManager(){
-        spManager = new SharedPreferencesManager();
-        spManager.initUserInfoStorer(this);
-    }
+
     private void attemptLogin() {
         resetPasswordAndEmailErrors();
 
         if ( isEmailValid() && isPasswordValid() ) {
 
-            if (isLoginExistsInSharedPreferences())
+            if (isLoginExistsInDB())
                 checkExistingUserPassword();
             else
                 showHint("Вы не зарегистрированы. Нажмите кнопку \"Регистрация\".");
@@ -118,25 +122,29 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
     private void welcomeExistingUser() {
-        Toast.makeText(this, "Добро пожаловать, " +
-                spManager.getStringFromSharedPreferences("имя"), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "Добро пожаловать, " +
+//                user.getName(), Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, MenuActivity.class);
 //
 //
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 //
 //
         startActivity(intent);
     }
-    private boolean isLoginExistsInSharedPreferences() {
-        Log.i("REGISTRATION_ACTIVITY", spManager.getStringFromSharedPreferences("email"));
-        return !spManager.getStringFromSharedPreferences("email").equals("")
-                && spManager.getStringFromSharedPreferences("email").equals(mEmailView.getText().toString());
+    private boolean isLoginExistsInDB() {
+        List<User> userList = loginDB.findUser("email", mEmailView.getText().toString());
+        if (userList.size() == 1) {
+            user = userList.get(0);
+            Log.i("REGISTRATION_ACTIVITY", user.getEmail());
+            return true;
+        }
+        return false;
     }
 
     private boolean equalsPasswordExistingUserAndInputPassword() {
-        return spManager.getStringFromSharedPreferences("password").equals(mPasswordView.getText().toString());
+        return user.getPassword().equals(mPasswordView.getText().toString());
     }
 
     private boolean isEmailValid(){
