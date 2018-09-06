@@ -101,6 +101,11 @@ public class UserInfoActivity extends AppCompatActivity {
         Toast.makeText(this, "Сохранение", Toast.LENGTH_SHORT).show();
 
         String email = getIntent().getStringExtra("email");
+
+        SharedPreferencesManager spManager = new SharedPreferencesManager();
+        spManager.initUserInfoStorer(this);
+        spManager.putStringInSharedPreferences("active_user", email);
+
         List<User> userList = userInfoDataBase.findUserInfo(UserInfoDataBase.COLUMN_EMAIL, email);
         User user = userList.get(0);
         user.setSurname(editSurname.getText().toString());

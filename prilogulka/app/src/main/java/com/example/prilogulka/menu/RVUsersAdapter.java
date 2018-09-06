@@ -12,10 +12,10 @@ import com.example.prilogulka.data.User;
 
 import java.util.List;
 
-public class RVAdapter extends RecyclerView.Adapter<RVAdapter.PersonViewHolder>{
+public class RVUsersAdapter extends RecyclerView.Adapter<RVUsersAdapter.PersonViewHolder>{
     List<User> persons;
 
-    public RVAdapter(List<User> persons){
+    public RVUsersAdapter(List<User> persons){
         this.persons = persons;
     }
 

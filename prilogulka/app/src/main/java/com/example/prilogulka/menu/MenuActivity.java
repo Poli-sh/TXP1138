@@ -23,6 +23,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.VideoView;
 
+import com.example.prilogulka.ListOfUserActionsFragment;
 import com.example.prilogulka.ListOfUsersFragment;
 import com.example.prilogulka.R;
 import com.example.prilogulka.SharedPreferencesManager;
@@ -144,6 +145,7 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
                 fragment = new ListOfUsersFragment();
                 break;
             case R.id.list_of_user_actions:
+                fragment = new ListOfUserActionsFragment();
                 break;
 
             default:

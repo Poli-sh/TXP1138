@@ -12,16 +12,20 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.example.prilogulka.R;
+import com.example.prilogulka.SharedPreferencesManager;
+import com.example.prilogulka.data.User;
+import com.example.prilogulka.data_base.UserInfoDataBase;
+import com.example.prilogulka.data_base.UserInfoDataBaseImpl;
+
+import java.util.List;
 
 import static android.content.Context.MODE_PRIVATE;
 
 
 public class PersonalDataFragment extends Fragment{
 
-    //добавить подгрузку из БД
-    public static String SHARED_PREFERENCES_NAME = "userInfo";
-    SharedPreferences sharedPreferences;
-    SharedPreferences.Editor editor;
+    SharedPreferencesManager spManager;
+    UserInfoDataBase userDB;
 
     EditText editName, editSurname, editCity, editDay, editMonth, editYear;
     Spinner spinner;
@@ -31,22 +35,31 @@ public class PersonalDataFragment extends Fragment{
     @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        initUserInfoStorer();
+        spManager = new SharedPreferencesManager();
+        spManager.initUserInfoStorer(getContext());
 
-        String info = getStringFromSharedPreferences("имя");
-        String info1 = getStringFromSharedPreferences("фамилия");
-        String info2 = getStringFromSharedPreferences("город");
-        String info3 = getStringFromSharedPreferences("день рождения");
-        String info4 = getStringFromSharedPreferences("месяц рождения");
-        String info5 = getStringFromSharedPreferences("год рождения");
+        userDB = new UserInfoDataBaseImpl(getContext());
+        String email = spManager.getStringFromSharedPreferences("active_user");
+        List<User> userList = userDB.findUserInfo(userDB.COLUMN_EMAIL, email);
+        User user;
 
-        Log.i(LOG_TAG, "ПОЛ -------------- " + getStringFromSharedPreferences("пол"));
+        String info = "", info1 = "", info2 = "", info3 = "", info4 = "", info5 = "", info6 = "";
+        if (userList.size() == 1) {
+            user = userList.get(0);
 
-        String buf = getStringFromSharedPreferences("пол");
-        int info6 = buf.equals("") ? 0 : Integer.parseInt(buf);
+            info = user.getName();
+            info1 = user.getSurname();
+            info2 = user.getCity();
 
-        Log.i("PERSONAL_DATA_FRAGMENT", info6 + "");
+            String birthday = user.getBirthday();
+            info3 = birthday.substring(0,2);
+            info4 = birthday.substring(3,5);
+            info5 = birthday.substring(6, birthday.length());
 
+            info6 = user.getSex();
+
+            Log.i("PERSONAL_DATA_FRAGMENT", info6 + "");
+        }
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_personal_data, container, false);
         editName = rootView.findViewById(R.id.name);
         editName.setText(info);
@@ -74,18 +87,8 @@ public class PersonalDataFragment extends Fragment{
         editYear.setKeyListener(null);//.setEnabled(false);
 
         spinner = rootView.findViewById(R.id.sex);
-        spinner.setSelection(info6);
+        spinner.setSelection(info6.equals("муж") ? 0 : 1);
 
         return rootView;
     }
-
-    private void initUserInfoStorer(){
-        sharedPreferences = getActivity().getSharedPreferences(SHARED_PREFERENCES_NAME, MODE_PRIVATE);
-        editor = sharedPreferences.edit();
-    }
-
-    public String getStringFromSharedPreferences(String keyInSharedPreferences) {
-        return sharedPreferences.getString(keyInSharedPreferences, "");
-    }
-
 }

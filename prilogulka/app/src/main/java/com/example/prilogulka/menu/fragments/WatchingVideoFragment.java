@@ -15,6 +15,11 @@ import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.example.prilogulka.R;
+import com.example.prilogulka.SharedPreferencesManager;
+import com.example.prilogulka.data.Time;
+import com.example.prilogulka.data.Video;
+import com.example.prilogulka.data_base.UserActionsDataBase;
+import com.example.prilogulka.data_base.UserActionsDataBaseImpl;
 
 import java.util.Random;
 
@@ -38,6 +43,9 @@ public class WatchingVideoFragment extends Fragment implements View.OnClickListe
     VideoView videoView;
     TextView textViewVideoCounter;
 
+    UserActionsDataBase actionsDB;
+    SharedPreferencesManager spManager;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_watching_video, container, false);
@@ -53,6 +61,11 @@ public class WatchingVideoFragment extends Fragment implements View.OnClickListe
 
 
         uriList = new Uri[]{myUri1, myUri2, myUri3, myUri4};
+
+        spManager = new SharedPreferencesManager();
+        spManager.initUserInfoStorer(getContext());
+
+        actionsDB = new UserActionsDataBaseImpl(getContext());
 
         return rootView;
     }
@@ -117,6 +130,9 @@ public class WatchingVideoFragment extends Fragment implements View.OnClickListe
         Log.i(CLASS_TAG, "VIDEO #" + playingVideoIndex + " was over, STARTING new video");
         money ++;
 
+        actionsDB.insertUserActions(new Video(1, spManager.getStringFromSharedPreferences("active_user"),
+                playingVideoIndex+"", 2*playingVideoIndex+1,
+                Time.getTodayTime()+" " + Time.getToday()));
         textViewVideoCounter.setText(money+"");
         nextVideo();
     }

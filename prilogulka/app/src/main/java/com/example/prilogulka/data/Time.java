@@ -15,6 +15,6 @@ public class Time {
     public static String getToday(){
         Date date = new Date();
 
-        return date.getDay()+"."+date.getMonth()+"."+date.getYear();
+        return date.getDay()+"."+date.getMonth()+"."+(date.getYear()+1900);
     }
 }

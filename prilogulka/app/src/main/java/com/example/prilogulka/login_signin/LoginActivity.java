@@ -5,6 +5,7 @@ import android.support.design.widget.TextInputLayout;
 import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
 
+import com.example.prilogulka.SharedPreferencesManager;
 import com.example.prilogulka.data.User;
 import com.example.prilogulka.data_base.UserInfoDataBaseImpl;
 import com.example.prilogulka.menu.MenuActivity;
@@ -116,15 +117,10 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
     private void welcomeExistingUser() {
-//        Toast.makeText(this, "Добро пожаловать, " +
-//                user.getName(), Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, MenuActivity.class);
-//
-//
-//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//
-//
+        SharedPreferencesManager spManager = new SharedPreferencesManager();
+        spManager.initUserInfoStorer(this);;
+        spManager.putStringInSharedPreferences("active_user", mEmailView.getText().toString());
         startActivity(intent);
     }
     private boolean isLoginExistsInDataBase() {

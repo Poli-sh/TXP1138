@@ -1,6 +1,5 @@
 package com.example.prilogulka.data_base;
 
-import com.example.prilogulka.data.Time;
 import com.example.prilogulka.data.User;
 
 import java.util.List;

@@ -8,29 +8,25 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.prilogulka.data_base.UserInfoDataBaseImpl;
-import com.example.prilogulka.menu.RVUsersAdapter;
+import com.example.prilogulka.data_base.UserActionsDataBaseImpl;
+import com.example.prilogulka.menu.RVActionsAdapter;
 
-public class ListOfUsersFragment extends Fragment {
+public class ListOfUserActionsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        ViewGroup rootView = (ViewGroup)inflater.inflate(R.layout.fragment_list_of_users, container, false);
-        RecyclerView rv = (RecyclerView)rootView.findViewById(R.id.rv);
+        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_list_of_users_actions, container, false);
+        RecyclerView rv = (RecyclerView) rootView.findViewById(R.id.rv);
 
         LinearLayoutManager llm = new LinearLayoutManager(getContext());
         rv.setLayoutManager(llm);
 
+        UserActionsDataBaseImpl actionsDB = new UserActionsDataBaseImpl(getContext());
 
-        UserInfoDataBaseImpl userDB = new UserInfoDataBaseImpl(getContext());
-
-        RVUsersAdapter adapter = new RVUsersAdapter(userDB.selectAll());
+        RVActionsAdapter adapter = new RVActionsAdapter(actionsDB.selectAll());
         rv.setAdapter(adapter);
         return rootView;
     }
-
-
 }
-
