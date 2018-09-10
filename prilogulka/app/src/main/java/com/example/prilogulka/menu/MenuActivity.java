@@ -27,6 +27,9 @@ import com.example.prilogulka.ListOfUserActionsFragment;
 import com.example.prilogulka.ListOfUsersFragment;
 import com.example.prilogulka.R;
 import com.example.prilogulka.SharedPreferencesManager;
+import com.example.prilogulka.data.User;
+import com.example.prilogulka.data_base.UserInfoDataBase;
+import com.example.prilogulka.data_base.UserInfoDataBaseImpl;
 import com.example.prilogulka.login_signin.LoginActivity;
 import com.example.prilogulka.menu.fragments.ConnectUsFragment;
 import com.example.prilogulka.menu.fragments.GiftsManagerFragment;
@@ -35,12 +38,15 @@ import com.example.prilogulka.menu.fragments.NavigationMoneyFragment;
 import com.example.prilogulka.menu.fragments.PersonalDataFragment;
 import com.example.prilogulka.menu.fragments.WatchingVideoFragment;
 
+import java.util.List;
+
 
 //данный класс содержит выпадающее меню (с фрагментами) и VideoView с кнопками управления воспроизведением (в content_menu).
 
 public class MenuActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     SharedPreferencesManager spManager;
+    UserInfoDataBase userDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +55,12 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
 
         spManager = new SharedPreferencesManager();
         spManager.initUserInfoStorer(this);
+        userDB = new UserInfoDataBaseImpl(this);
+        String email = spManager.getStringFromSharedPreferences("active_user");
+        List<User> userList = userDB.findUserInfo("email", email);//new User();
+        User user = new User();
+        if (userList.size() == 1)
+            user = userList.get(0);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -65,11 +77,10 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
         View headerView = navigationView.getHeaderView(0);
 
         TextView userNameHeader = headerView.findViewById(R.id.nav_header_user_name);
-        userNameHeader.setText(spManager.getStringFromSharedPreferences("фамилия") + " "
-        + spManager.getStringFromSharedPreferences("имя"));
+        userNameHeader.setText(user.getName() + " " + user.getSurname());
 
         TextView userEmailHeader = headerView.findViewById(R.id.nav_header_user_email);
-        userEmailHeader.setText(spManager.getStringFromSharedPreferences("email"));
+        userEmailHeader.setText(user.getEmail());
 
         FragmentTransaction tx = getSupportFragmentManager().beginTransaction();
         tx.replace(R.id.flContent, new WatchingVideoFragment());
